@@ -22,6 +22,65 @@
 
 <img src="./assets/divider.svg" width="100%" alt="" />
 
+## 🔒 Private Founder Builds
+
+<sub>Both repositories are private. What follows is architecture, role, and engineering decisions — never proprietary code, product flows, or business strategy.</sub>
+
+### 🧠 Nureli — iOS Emotional Wellness Platform
+<sub>**by Soul Nestle · Building** — helping adults heal from childhood emotional neglect through science-backed, trauma-informed support.</sub>
+
+> **The problem** — Wellness apps are mostly shallow content wrappers, and a clinical-adjacent space has a constraint most ignore: a user can be in genuine crisis mid-session. The product must be personal and AI-assisted, yet **safe, private, and responsible by construction** — not by disclaimer.
+
+**My role** — sole iOS founder-engineer: app architecture, the server-side AI & safety layer, data & privacy model, design system, and monetization.
+
+| Layer | What I built |
+|---|---|
+| 📲 **App** | SwiftUI · MVVM · `@Observable` (iOS 17) · ~27K LOC across **13 feature modules** · a layered Core |
+| 🛡️ **AI & safety** | OpenAI reachable **only** via Supabase Edge Functions — key never on device · **crisis detection runs first in every call** → routes to the 988 Lifeline, bypassing all other logic · per-user daily rate limit that degrades into a gentle in-voice message |
+| 🔐 **Data & privacy** | PostgreSQL with **RLS on every user table** · offline-first SwiftData store synced to remote · private voice bucket · **zero health/emotional content in analytics** |
+| 🎯 **Personalization** | Pattern-detection + feature-threshold engines that progressively reveal the experience from emotional signals |
+| 🛰️ **Server-driven** | Remote-config + feature-policy engines change content, flags & unlocks **without an App Store release** |
+| 💳 **Monetization** | RevenueCat — every feature available Day 1, a single `isPremium` gate |
+
+**Decisions worth calling out**
+- **Safety supersedes everything** — crisis detection runs *before* rate-limiting or product logic; a user in crisis is never gated away from the 988 response.
+- **The AI key never reaches the client** — all model calls go server-side, with cost/abuse limits and in-voice failure modes.
+- **Privacy by architecture, not policy** — RLS everywhere, offline-first source of truth, analytics structurally blind to emotional data.
+
+`Swift 6` `SwiftUI` `Supabase` `PostgreSQL + RLS` `Edge Functions` `OpenAI` `RevenueCat` `PostHog`
+
+<sub>🌱 Pre-incubated at VIT · built with the VIT counselling team & clinical psychologists · began as a workbook that reached **1,000+ people**, now shaping the product.</sub>
+
+<br/>
+
+### 🪷 Cultural-Technology Platform
+<sub>**Founder / Product Engineer · Live, in stealth** — *technology used to preserve meaningful human experiences and make them accessible.*</sub>
+
+> **The problem** — Millions of families want authentic, correctly-performed rituals but are blocked by distance, time, and finding trusted, verified practitioners. The experience is high-trust, multi-step, and ends with a **physical** offering in your hands — all hard to make feel authentic online.
+
+**My role** — sole founder-engineer: architecture and build across frontend, backend, payments, AI, data, fulfillment, and growth.
+
+| Layer | What I built |
+|---|---|
+| 🌐 **Web** | Next.js 15 (App Router) · React 19 · TypeScript · Tailwind · Framer Motion |
+| 🗣️ **i18n** | `next-intl`, fully bilingual (English / Hindi), locale-routed via edge middleware |
+| 🗄️ **Data** | Supabase / PostgreSQL · 20+ versioned migrations · normalized devotees, bookings, catalog, subscriptions & shipments |
+| 💳 **Payments** | **Provider-neutral** layer over multiple gateways (UPI · cards · subscriptions) · signature verification · an **idempotent webhook ledger** that survives retries without double-charging |
+| 🤖 **AI** | Provider-abstracted LLM layer generating a **personalized ritual intention (Sankalp)** from structured inputs — with **deterministic, fallback-safe degradation** so a booking never breaks when the model does |
+| 📦 **Fulfillment** | Logistics integration for physical delivery — full shipment lifecycle & tracking |
+| 📈 **Growth** | Meta Pixel + **server-side Conversion API** · abandoned-lead recovery · workflow automation (n8n) |
+
+**Decisions worth calling out**
+- **Provider-neutral payments** — gateways behind one interface; an idempotent processed-event ledger makes webhook retries safe.
+- **AI that fails gracefully** — every generated output has a deterministic fallback; the revenue path never depends on a model call.
+- **Trust-first by design** — verified practitioners, live documentation, transparent payment & refund flows.
+
+`Next.js` `React` `TypeScript` `Supabase` `PostgreSQL` `Razorpay` `OpenAI` `Vercel`
+
+<sub>🪔 Multilingual, mobile-first, built for non-technical users on patchy networks.</sub>
+
+<img src="./assets/divider.svg" width="100%" alt="" />
+
 ## 👋 About
 
 I'm a CS undergrad (2nd year) and **founder-engineer** building human-centered technology where **psychology, AI, and mobile engineering** meet.
@@ -137,65 +196,6 @@ Ask in plain English → AI generates and **safely executes** Python for charts 
 </td>
 </tr>
 </table>
-
-<img src="./assets/divider.svg" width="100%" alt="" />
-
-## 🔒 Private Founder Builds
-
-<sub>Both repositories are private. What follows is architecture, role, and engineering decisions — never proprietary code, product flows, or business strategy.</sub>
-
-### 🧠 Nureli — iOS Emotional Wellness Platform
-<sub>**by Soul Nestle · Building** — helping adults heal from childhood emotional neglect through science-backed, trauma-informed support.</sub>
-
-> **The problem** — Wellness apps are mostly shallow content wrappers, and a clinical-adjacent space has a constraint most ignore: a user can be in genuine crisis mid-session. The product must be personal and AI-assisted, yet **safe, private, and responsible by construction** — not by disclaimer.
-
-**My role** — sole iOS founder-engineer: app architecture, the server-side AI & safety layer, data & privacy model, design system, and monetization.
-
-| Layer | What I built |
-|---|---|
-| 📲 **App** | SwiftUI · MVVM · `@Observable` (iOS 17) · ~27K LOC across **13 feature modules** · a layered Core |
-| 🛡️ **AI & safety** | OpenAI reachable **only** via Supabase Edge Functions — key never on device · **crisis detection runs first in every call** → routes to the 988 Lifeline, bypassing all other logic · per-user daily rate limit that degrades into a gentle in-voice message |
-| 🔐 **Data & privacy** | PostgreSQL with **RLS on every user table** · offline-first SwiftData store synced to remote · private voice bucket · **zero health/emotional content in analytics** |
-| 🎯 **Personalization** | Pattern-detection + feature-threshold engines that progressively reveal the experience from emotional signals |
-| 🛰️ **Server-driven** | Remote-config + feature-policy engines change content, flags & unlocks **without an App Store release** |
-| 💳 **Monetization** | RevenueCat — every feature available Day 1, a single `isPremium` gate |
-
-**Decisions worth calling out**
-- **Safety supersedes everything** — crisis detection runs *before* rate-limiting or product logic; a user in crisis is never gated away from the 988 response.
-- **The AI key never reaches the client** — all model calls go server-side, with cost/abuse limits and in-voice failure modes.
-- **Privacy by architecture, not policy** — RLS everywhere, offline-first source of truth, analytics structurally blind to emotional data.
-
-`Swift 6` `SwiftUI` `Supabase` `PostgreSQL + RLS` `Edge Functions` `OpenAI` `RevenueCat` `PostHog`
-
-<sub>🌱 Pre-incubated at VIT · built with the VIT counselling team & clinical psychologists · began as a workbook that reached **1,000+ people**, now shaping the product.</sub>
-
-<br/>
-
-### 🪷 Cultural-Technology Platform
-<sub>**Founder / Product Engineer · Live, in stealth** — *technology used to preserve meaningful human experiences and make them accessible.*</sub>
-
-> **The problem** — Millions of families want authentic, correctly-performed rituals but are blocked by distance, time, and finding trusted, verified practitioners. The experience is high-trust, multi-step, and ends with a **physical** offering in your hands — all hard to make feel authentic online.
-
-**My role** — sole founder-engineer: architecture and build across frontend, backend, payments, AI, data, fulfillment, and growth.
-
-| Layer | What I built |
-|---|---|
-| 🌐 **Web** | Next.js 15 (App Router) · React 19 · TypeScript · Tailwind · Framer Motion |
-| 🗣️ **i18n** | `next-intl`, fully bilingual (English / Hindi), locale-routed via edge middleware |
-| 🗄️ **Data** | Supabase / PostgreSQL · 20+ versioned migrations · normalized devotees, bookings, catalog, subscriptions & shipments |
-| 💳 **Payments** | **Provider-neutral** layer over multiple gateways (UPI · cards · subscriptions) · signature verification · an **idempotent webhook ledger** that survives retries without double-charging |
-| 🤖 **AI** | Provider-abstracted LLM layer generating a **personalized ritual intention (Sankalp)** from structured inputs — with **deterministic, fallback-safe degradation** so a booking never breaks when the model does |
-| 📦 **Fulfillment** | Logistics integration for physical delivery — full shipment lifecycle & tracking |
-| 📈 **Growth** | Meta Pixel + **server-side Conversion API** · abandoned-lead recovery · workflow automation (n8n) |
-
-**Decisions worth calling out**
-- **Provider-neutral payments** — gateways behind one interface; an idempotent processed-event ledger makes webhook retries safe.
-- **AI that fails gracefully** — every generated output has a deterministic fallback; the revenue path never depends on a model call.
-- **Trust-first by design** — verified practitioners, live documentation, transparent payment & refund flows.
-
-`Next.js` `React` `TypeScript` `Supabase` `PostgreSQL` `Razorpay` `OpenAI` `Vercel`
-
-<sub>🪔 Multilingual, mobile-first, built for non-technical users on patchy networks.</sub>
 
 <img src="./assets/divider.svg" width="100%" alt="" />
 
