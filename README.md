@@ -74,11 +74,33 @@ Upload a CSV, ask a question in plain English, and the app generates + safely ex
 
 ### 🧠 Nureli — iOS Emotional Wellness Platform · *by Soul Nestle · Building*
 
-Helping adults understand and heal from childhood emotional neglect through science-backed, trauma-informed support.
+A native iOS app helping adults understand and heal from childhood emotional neglect through science-backed, trauma-informed support.
 
-**What I own** — mobile architecture (SwiftUI · MVVM · ~27K LOC across 13 feature modules) · privacy-first design with **zero** health/emotional content in analytics · AI via server-side edge functions only, with **crisis-detection running first** in every call · experimentation, paywall & monetization.
+**The problem** — Emotional-wellness apps are mostly shallow content wrappers, and a clinical-adjacent space has a hard constraint most apps ignore: a user can be in genuine crisis mid-session. The product has to be personal and AI-assisted, yet *safe*, *private*, and *responsible* by construction — not by disclaimer.
 
-`Swift 6` · `SwiftUI` · `Supabase` · `PostgreSQL + RLS` · `Edge Functions` · `RevenueCat` · `PostHog` · `swift-crypto`
+**My role** — sole iOS founder-engineer: app architecture, the server-side AI & safety layer, data & privacy model, design system, and monetization. Built with the VIT counselling team & clinical psychologists.
+
+**System architecture**
+
+| Layer | What I built |
+|---|---|
+| **App** | SwiftUI · MVVM · `@Observable` (iOS 17) · ~27K LOC across **13 feature modules** · a layered Core (services, storage, analysis, config, theme) |
+| **AI & safety** | OpenAI reachable **only** through Supabase Edge Functions (Deno) — the key never touches the device · **crisis detection runs first in every call** → routes to the 988 Lifeline, bypassing all other logic · per-user daily rate limit that degrades into a gentle, in-voice message, never a raw error |
+| **Data & privacy** | Supabase / PostgreSQL with **RLS on every user table** · offline-first SwiftData local store synced to remote · private voice-recording bucket · **zero health/emotional content in analytics**, by design |
+| **Personalization** | A pattern-detection engine + feature-threshold/unlock engines that progressively reveal the experience from emotional signals (archetype, healing-day count, body-zone history) |
+| **Server-driven** | Remote-config + feature-policy engines change content, flags & unlocks **without an App Store release** |
+| **Monetization** | RevenueCat — every feature available Day 1, gated by a single `isPremium` flag |
+| **Design system** | Spring-only motion, serif-for-emotion / rounded-for-chrome type, haptic patterns, liquid-glass surfaces, and **code-drawn botanical art** (no raster) — a deliberate, trauma-informed feel |
+
+**Engineering decisions worth calling out**
+- **Safety supersedes everything** — every AI edge function runs crisis detection *before* rate-limiting or product logic; a user in crisis is never gated, rate-limited, or delayed away from the 988 response.
+- **The AI key never reaches the client** — all model calls go server-side; per-user daily limits cap cost and abuse, and any failure degrades into an in-voice message rather than an error.
+- **Privacy by architecture, not policy** — RLS on every table, an offline-first local store as the source of truth for sensitive content, and analytics that are structurally unable to see emotional data.
+- **Ship without re-shipping** — remote config + threshold/unlock engines let the experience evolve server-side between releases.
+
+**Lessons** — building responsibly in a clinical-adjacent domain; designing trauma-informed motion and copy; making safety a non-negotiable that sits *above* cost and product concerns.
+
+`Swift 6` · `SwiftUI` · `Supabase` · `PostgreSQL + RLS` · `Edge Functions (Deno)` · `OpenAI` · `RevenueCat` · `PostHog` · `swift-crypto`
 
 > Pre-incubated at VIT · built with the VIT counselling team & clinical psychologists · began as a workbook that reached **1,000+ people**, now shaping the product.
 
