@@ -70,50 +70,48 @@ Upload a CSV, ask a question in plain English, and the app generates + safely ex
 
 ## 🔒 Private Founder Builds — *showcased without exposing IP*
 
-> These repositories are private. Below is architecture, role, and outcomes — never proprietary code.
+> Both repositories are private. What follows is architecture, role, and engineering decisions — never proprietary code, product flows, or business strategy.
 
-<table>
-<tr><td width="50%" valign="top">
-
-### 🧠 Nureli — iOS Emotional Wellness Platform
-**by Soul Nestle · Status: Building**
+### 🧠 Nureli — iOS Emotional Wellness Platform · *by Soul Nestle · Building*
 
 Helping adults understand and heal from childhood emotional neglect through science-backed, trauma-informed support.
 
-**What I own**
-- Mobile architecture (SwiftUI · MVVM · ~27K LOC, 13 feature modules)
-- Privacy-first design — **zero** health/emotional content in analytics
-- AI via server-side edge functions only; **crisis-detection runs first** in every call
-- Experimentation, paywall & monetization, product systems
+**What I own** — mobile architecture (SwiftUI · MVVM · ~27K LOC across 13 feature modules) · privacy-first design with **zero** health/emotional content in analytics · AI via server-side edge functions only, with **crisis-detection running first** in every call · experimentation, paywall & monetization.
 
-**Engineering**
 `Swift 6` · `SwiftUI` · `Supabase` · `PostgreSQL + RLS` · `Edge Functions` · `RevenueCat` · `PostHog` · `swift-crypto`
 
-**Context** — Pre-incubated at VIT · built with the VIT counselling team & clinical psychologists · started as a workbook that reached **1,000+ people**, now shaping the product.
+> Pre-incubated at VIT · built with the VIT counselling team & clinical psychologists · began as a workbook that reached **1,000+ people**, now shaping the product.
 
-</td><td width="50%" valign="top">
+<br/>
 
-### 🪷 Stealth Cultural-Technology Platform
-**Founder / Product Engineer · Status: Stealth**
+### 🪷 Cultural-Technology Platform · *Founder / Product Engineer · Live, in stealth*
 
-Building infrastructure that connects traditional cultural experiences with modern digital product experiences — *using technology to preserve meaningful human experiences and make them more accessible.*
+A consumer platform that takes a **traditional, trust-sensitive, deeply offline cultural-devotional experience and rebuilds it as a digital product** — connecting families with temple-verified practitioners, live-documented rituals, and doorstep delivery of physical blessed offerings, in their own language. *Technology used to preserve meaningful human experiences and make them accessible.*
 
-**Focus areas**
-- Consumer technology & marketplace-style systems
-- Scalable mobile / web experiences
-- User trust, accessibility & digital transformation of offline experiences
+**The problem** — Millions of families want authentic, correctly-performed rituals but are blocked by distance, time, and the difficulty of finding trusted, verified practitioners. The real-world experience is high-trust, multi-step, and ends with a *physical* offering in your hands — all hard to make feel authentic online.
 
-**What I own**
-- Full-stack product architecture (frontend systems · backend infra · auth · DB design)
-- Product thinking, UX decisions, rapid prototyping, analytics & iteration
+**My role** — sole founder-engineer: architecture and build across frontend, backend, payments, AI, data, fulfillment, and growth.
 
-**Key learnings**
-- Building for diverse users
-- Simplifying complex offline experiences into trustworthy digital flows
-- Balancing culture, technology, and usability
+**System architecture**
 
-</td></tr>
-</table>
+| Layer | What I built |
+|---|---|
+| **Web** | Next.js 15 (App Router) · React 19 · TypeScript · Tailwind · Framer Motion |
+| **i18n** | `next-intl`, fully bilingual (English / Hindi), locale-routed via edge middleware — built for non-English-first users |
+| **Data** | Supabase / PostgreSQL · 20+ versioned migrations · normalized model for devotees, bookings, catalog, subscriptions & shipments |
+| **Payments** | **Provider-neutral** layer over multiple gateways (UPI · cards · subscriptions) · signature verification · an **idempotent webhook ledger** that survives gateway retries without double-charging |
+| **AI** | A provider-abstracted LLM layer that generates a **personalized, devotionally-accurate ritual intention (Sankalp)** from structured inputs — with **deterministic, fallback-safe degradation** so a booking never breaks when the model does |
+| **Fulfillment** | Logistics integration for physical delivery — full shipment lifecycle & tracking |
+| **Growth** | Meta Pixel + **server-side Conversion API**, event tracking, abandoned-lead capture & recovery, workflow automation (n8n) |
+| **Domain** | Almanac (Panchang) & birth-chart (Kundli) data, festival calendars, SEO (sitemap / blog) |
+
+**Engineering decisions worth calling out**
+- **Provider-neutral payments** — gateways sit behind one interface, so adding or switching a PSP never touches booking logic; an idempotent processed-event ledger makes webhook retries safe.
+- **AI that fails gracefully** — every generated output has a deterministic fallback; the revenue path never depends on a model call succeeding.
+- **Trust-first by design** — verified practitioners, live documentation, transparent payment & refund flows, because this category lives or dies on trust.
+- **Built for the real user** — multilingual, mobile-first, fast on patchy networks, usable by non-technical devotees.
+
+**Lessons** — simplifying a complex, emotional, offline experience into a digital flow people *trust*; designing consumer platforms for diverse users; balancing culture, technology, and usability.
 
 ---
 
